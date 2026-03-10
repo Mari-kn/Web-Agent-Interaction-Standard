@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Create Token — WAIS PoD Platform{% endblock %}
+{% block content %}
+<hgroup>
+    <h2>Create Delegation Token</h2>
+    <p>Define what your AI agent is allowed to do.</p>
+</hgroup>
+
+<form method="post" action="/tokens/create">
+    <label for="audience">
+        Target Website (audience)
+        <input type="url" id="audience" name="audience" placeholder="https://example-store.com" required>
+    </label>
+
+    <h3>Authorized Scopes</h3>
+    {% for vertical, scopes in scopes_by_vertical.items() %}
+    <details {% if vertical == "E-Commerce" %}open{% endif %}>
+        <summary>{{ vertical }}</summary>
+        <fieldset>
+            {% for scope in scopes %}
+            <label>
+                <input type="checkbox" name="scopes" value="{{ scope }}">
+                <code>{{ scope }}</code>
+            </label>
+            {% endfor %}
+        </fieldset>
+    </details>
+    {% endfor %}
+
+    <h3>Constraints</h3>
+    <div class="grid">
+        <label for="max_amount">
+            Max Transaction Amount
+            <input type="number" id="max_amount" name="max_amount" value="500" step="0.01" min="0">
+        </label>
+        <label for="confirm_above">
+            Require Confirmation Above
+            <input type="number" id="confirm_above" name="confirm_above" value="100" step="0.01" min="0">
+        </label>
+        <label for="currency">
+            Currency
+            <select id="currency" name="currency">
+                <option value="EUR" selected>EUR</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+            </select>
+        </label>
+    </div>
+
+    <label for="ttl">
+        Token Lifetime
+        <select id="ttl" name="ttl">
+            <option value="1800">30 minutes</option>
+            <option value="3600" selected>1 hour</option>
+            <option value="7200">2 hours</option>
+            <option value="86400">24 hours</option>
+        </select>
+    </label>
+
+    <button type="submit">Create Token</button>
+</form>
+{% endblock %}

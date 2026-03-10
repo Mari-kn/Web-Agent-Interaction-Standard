@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}WAIS PoD Platform{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="container">
+        <ul>
+            <li><strong><a href="/" class="contrast">WAIS PoD Platform</a></strong></li>
+        </ul>
+        <ul>
+            {% if user %}
+            <li>
+                {% if user.picture %}
+                <img src="{{ user.picture }}" alt="" class="avatar">
+                {% endif %}
+                {{ user.name }}
+            </li>
+            <li><a href="/auth/logout" role="button" class="outline secondary">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="container">
+        <hr>
+        <p><small>WAIS — Web Agent Identification Standard | <a href="https://deeger.io">Deeger</a></small></p>
+    </footer>
+</body>
+</html>

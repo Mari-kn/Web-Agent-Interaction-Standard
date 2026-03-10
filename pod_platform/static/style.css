@@ -1,0 +1,45 @@
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.hero {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.hero article {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.scope-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    background: var(--pico-primary-background);
+    color: var(--pico-primary-inverse);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin: 1px 2px;
+}
+
+.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.status-expired {
+    color: gray;
+}
+
+.status-revoked {
+    color: red;
+}
+
+tr.highlight {
+    background: var(--pico-primary-focus);
+}

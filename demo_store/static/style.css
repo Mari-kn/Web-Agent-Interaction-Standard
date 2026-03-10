@@ -1,0 +1,21 @@
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--pico-primary);
+}
+
+.category {
+    display: inline-block;
+    margin-left: 12px;
+    background: var(--pico-secondary-background);
+    color: var(--pico-secondary-inverse);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+}
+
+article footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

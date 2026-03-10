@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Catalog — Demo Store{% endblock %}
+{% block content %}
+<hgroup>
+    <h2>Product Catalog</h2>
+    <p>Browse our selection of tech products. AI agents can interact via the API with a valid PoD token.</p>
+</hgroup>
+
+<div class="grid">
+    {% for product in products %}
+    <article>
+        <header>
+            <strong>{{ product.name }}</strong>
+        </header>
+        <p>{{ product.description }}</p>
+        <footer>
+            <span class="price">{{ product.currency }} {{ "%.2f"|format(product.price) }}</span>
+            <small class="category">{{ product.category }}</small>
+        </footer>
+    </article>
+    {% endfor %}
+</div>
+
+<hr>
+<details>
+    <summary>API Usage (for agents)</summary>
+    <pre><code>GET /api/products
+GET /api/products/{id}
+POST /api/cart          (scope: cart.modify)
+GET /api/cart           (scope: cart.modify)
+DELETE /api/cart/{id}   (scope: cart.modify)
+POST /api/checkout      (scope: checkout.execute)
+POST /api/checkout/confirm
+
+Header: X-WAIS-PoD: &lt;token&gt;</code></pre>
+</details>
+{% endblock %}

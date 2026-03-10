@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Sign In — WAIS PoD Platform{% endblock %}
+{% block content %}
+<section class="hero">
+    <hgroup>
+        <h1>Proof of Delegation Platform</h1>
+        <p>Issue delegation tokens so AI agents can act on your behalf — safely.</p>
+    </hgroup>
+    <div class="grid">
+        <article>
+            <h3>How it works</h3>
+            <ol>
+                <li>Sign in with your Google account</li>
+                <li>Create a delegation token with specific scopes and limits</li>
+                <li>Give the token to your AI agent</li>
+                <li>Websites verify the token and know the agent is authorized</li>
+            </ol>
+            <a href="/auth/login" role="button">Sign in with Google</a>
+        </article>
+    </div>
+</section>
+{% endblock %}

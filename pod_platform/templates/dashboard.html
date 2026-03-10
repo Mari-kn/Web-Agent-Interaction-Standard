@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — WAIS PoD Platform{% endblock %}
+{% block content %}
+<hgroup>
+    <h2>Your Delegation Tokens</h2>
+    <p>Manage tokens issued for your AI agents.</p>
+</hgroup>
+
+<p><a href="/tokens/create" role="button">Create New Token</a></p>
+
+{% if tokens %}
+<figure>
+<table>
+    <thead>
+        <tr>
+            <th>Audience</th>
+            <th>Scopes</th>
+            <th>Status</th>
+            <th>Expires</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tokens %}
+        <tr {% if highlight_jti == t.jti %}class="highlight"{% endif %}>
+            <td><code>{{ t.audience }}</code></td>
+            <td>
+                {% for s in t.scopes[:3] %}
+                <span class="scope-badge">{{ s }}</span>
+                {% endfor %}
+                {% if t.scopes|length > 3 %}
+                <small>+{{ t.scopes|length - 3 }} more</small>
+                {% endif %}
+            </td>
+            <td>
+                {% if t.revoked %}
+                <span class="status-revoked">Revoked</span>
+                {% elif t.exp < now %}
+                <span class="status-expired">Expired</span>
+                {% else %}
+                <span class="status-active">Active</span>
+                {% endif %}
+            </td>
+            <td><small>{{ t.exp }}</small></td>
+            <td>
+                {% if not t.revoked and t.exp >= now %}
+                <form method="post" action="/tokens/{{ t.jti }}/revoke" style="display:inline">
+                    <button type="submit" class="outline secondary" style="padding: 4px 12px; margin: 0;">Revoke</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% if highlight_jti == t.jti %}
+        <tr>
+            <td colspan="5">
+                <details open>
+                    <summary>Token string (copy this)</summary>
+                    <textarea readonly rows="4" style="font-family: monospace; font-size: 0.8em;" onclick="this.select()">{{ t.token_string }}</textarea>
+                </details>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+</figure>
+{% else %}
+<p>No tokens yet. <a href="/tokens/create">Create your first token</a> to get started.</p>
+{% endif %}
+{% endblock %}
