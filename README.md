@@ -165,6 +165,47 @@ PoD defines a taxonomy of scopes by vertical:
 | `document.request` | Request documents | High |
 | `records.access` | Access medical records | Critical |
 
+### Education
+| Scope | Description | Risk Level |
+|-------|-------------|------------|
+| `course.browse` | Search and view courses | Low |
+| `course.enroll` | Enroll in a course | High |
+| `course.drop` | Drop/withdraw from a course | High |
+| `assignment.submit` | Submit coursework | High |
+| `grades.access` | View grades and transcripts | Medium |
+| `certificate.request` | Request completion certificates | Medium |
+
+### Real Estate
+| Scope | Description | Risk Level |
+|-------|-------------|------------|
+| `listing.browse` | Search properties | Low |
+| `listing.compare` | Access detailed pricing/history | Low |
+| `tour.schedule` | Schedule property viewings | Medium |
+| `application.submit` | Submit rental/purchase applications | High |
+| `lease.sign` | Sign a lease or agreement | Critical |
+| `maintenance.request` | Submit maintenance requests | Medium |
+
+### Social Media & Content
+| Scope | Description | Risk Level |
+|-------|-------------|------------|
+| `content.read` | Browse feeds and profiles | Low |
+| `content.create` | Create posts/comments | Medium |
+| `content.delete` | Delete own content | High |
+| `profile.modify` | Update profile information | Medium |
+| `messaging.read` | Read messages/notifications | Medium |
+| `messaging.send` | Send messages | High |
+| `account.settings` | Modify account settings | High |
+
+### IoT & Smart Home
+| Scope | Description | Risk Level |
+|-------|-------------|------------|
+| `device.read` | View device status/sensor data | Low |
+| `device.control` | Control devices (on/off, adjust) | Medium |
+| `automation.manage` | Create/modify automation rules | High |
+| `firmware.update` | Trigger firmware updates | High |
+| `access.grant` | Grant device access to others | Critical |
+| `device.remove` | Remove/unpair a device | High |
+
 ---
 
 ## Confirmation Protocol
