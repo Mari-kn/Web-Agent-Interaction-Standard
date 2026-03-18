@@ -375,6 +375,46 @@ token = issuer.create_token(
 )
 ```
 
+### Token Revocation (Site-side)
+
+```python
+from pod import PoDVerifier, RevocationList
+
+# Set up verifier as usual
+verifier = PoDVerifier()
+verifier.add_trusted_platform_pem("https://platform.example.com", public_key_pem)
+
+# Fetch and set the platform's revocation list (do this periodically)
+import json, urllib.request
+resp = urllib.request.urlopen("https://platform.example.com/.well-known/wais-revocation")
+revocation_list = RevocationList.from_dict(json.loads(resp.read()))
+verifier.set_revocation_list(revocation_list)
+
+# Verify as normal — revoked tokens are now automatically rejected
+result = verifier.verify(token_string, expected_audience="https://your-site.com")
+if not result.valid:
+    print(result.reason)              # "Token revoked"
+    print(result.revocation_reason)   # "user_revoked"
+```
+
+### Manage a Revocation List (Platform-side)
+
+```python
+from pod import RevocationList
+
+# Create a revocation list for your platform
+rev_list = RevocationList(issuer="https://your-platform.com", ttl_seconds=120)
+
+# Revoke a token
+rev_list.revoke("token-jti-abc", reason="user_revoked")
+
+# Serialize for publishing at /.well-known/wais-revocation
+data = rev_list.to_dict()
+
+# Prune entries for tokens that have naturally expired
+rev_list.prune(max_token_exp=int(time.time()) - 3600)
+```
+
 ---
 
 ## Agents vs. Bots: How PoD Differentiates
