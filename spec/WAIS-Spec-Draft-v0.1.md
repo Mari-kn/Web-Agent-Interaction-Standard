@@ -519,6 +519,30 @@ This mirrors the early days of e-commerce: the first retailers to accept online 
 4. **Rate Limiting** — Sites should implement per-agent rate limits separate from human rate limits.
 5. **Audit Logging** — All agent actions must be logged with the agent's identity and delegation context for accountability.
 6. **Revocation** — Users must be able to revoke agent permissions at any time via their agent platform. Sites should support token revocation checks.
+
+   **Revocation List Protocol:** Agent platforms MUST publish a JSON revocation list at `/.well-known/wais-revocation` containing all currently revoked tokens that have not yet expired. The list format is:
+
+   ```json
+   {
+     "version": 1,
+     "issuer": "https://agent-platform.com",
+     "published_at": 1708617600,
+     "ttl_seconds": 300,
+     "entries": [
+       {
+         "jti": "token-uuid",
+         "revoked_at": 1708617500,
+         "reason": "user_revoked"
+       }
+     ]
+   }
+   ```
+
+   - **`ttl_seconds`**: Cache duration (60–300 seconds). Websites SHOULD re-fetch the list after this period.
+   - **`reason`**: One of `user_revoked`, `platform_revoked`, `compromised`, or `superseded`.
+   - **Pruning**: Entries for tokens past their `exp` timestamp MAY be removed, as expired tokens are already rejected by the verifier.
+   - **Verification**: Websites that support revocation checking SHOULD fetch the revocation list from the issuing platform periodically and reject tokens whose `jti` appears in the list. Revocation checking is opt-in — verifiers without a configured revocation list continue to operate as before.
+   - **Recommendation**: Use short token lifetimes (5–10 minutes) to minimize the window between revocation and enforcement.
 7. **Platform Registry** — A public registry of trusted agent platforms and their public keys enables sites to verify agent identities.
 
 ---

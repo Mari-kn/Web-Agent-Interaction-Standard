@@ -39,6 +39,20 @@ context: |
   - Spec (spec/WAIS-Spec-Draft-v0.1.md), README.md, and pod/scopes.py must stay in sync
   - Tests use pytest fixtures defined in tests/conftest.py
 
+  ## Git workflow
+  ### Branches
+  - main → production (live code, always deployable, protected — no direct pushes)
+  - develop → integration/staging (where features are combined and tested, can be unstable)
+  - feature/* → new features (one feature = one branch, created from develop, merged back to develop)
+  - bugfix/* → bug fixes found in develop/staging (created from develop, merged back to develop)
+  - hotfix/* → urgent production fixes (created from main, merged into both main and develop)
+
+  ### Commit conventions
+  - Use conventional commits: feat:, fix:, docs:, chore:
+  - Commits always authored as user (never as AI/root)
+  - Never include Co-Authored-By AI lines in commit messages
+  - Pull request required for merge — no direct pushes to main or develop
+
   ## Current status
   - Spec: Draft v0.1
   - Existing verticals: E-Commerce, Travel & Hospitality, Financial Services, Government & Public Services, Healthcare
