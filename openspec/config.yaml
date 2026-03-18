@@ -50,6 +50,7 @@ context: |
   ### Commit conventions
   - Use conventional commits: feat:, fix:, docs:, chore:
   - Commits always authored as user (never as AI/root)
+  - Never include Co-Authored-By AI lines in commit messages
   - Pull request required for merge — no direct pushes to main or develop
 
   ## Current status
